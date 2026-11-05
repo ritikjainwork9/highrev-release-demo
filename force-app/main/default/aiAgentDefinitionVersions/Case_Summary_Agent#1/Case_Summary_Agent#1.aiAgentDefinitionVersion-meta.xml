@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AiAgentDefinitionVersion xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleAnswersGPTEnabled>false</articleAnswersGPTEnabled>
+    <billingMode>ActionBased</billingMode>
+    <citationsEnabled>false</citationsEnabled>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>This variable may also be referred to as VerifiedCustomerId</description>
+        <developerName>VerifiedCustomerId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Verified Customer ID</label>
+        <visibility>Internal</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The API name of the Salesforce object of the record the user is viewing. When it is Case, the agent uses currentRecordId as the Case to summarize.</description>
+        <developerName>currentObjectApiName</developerName>
+        <includeInPrompt>true</includeInPrompt>
+        <label>currentObjectApiName</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <conversationVariables>
+        <dataType>Text</dataType>
+        <description>The Id of the record currently displayed on the user&apos;s screen. Use it as the Case record Id when the user refers to this case and currentObjectApiName is Case.</description>
+        <developerName>currentRecordId</developerName>
+        <includeInPrompt>true</includeInPrompt>
+        <label>currentRecordId</label>
+        <visibility>External</visibility>
+    </conversationVariables>
+    <errorMessage>Something went wrong. Please try again or contact your Salesforce Administrator.</errorMessage>
+    <genAiPlannerName>Case_Summary_Agent</genAiPlannerName>
+    <isScriptCompatibleAgent>false</isScriptCompatibleAgent>
+    <knowledgeActionEnabled>false</knowledgeActionEnabled>
+    <knowledgeFallbackEnabled>false</knowledgeFallbackEnabled>
+    <planner>
+        <fullName>Case_Summary_Agent</fullName>
+        <description>Summarizes a Case for service reps.</description>
+        <genAiPlugins>
+            <genAiPluginName>Case_Summary</genAiPluginName>
+        </genAiPlugins>
+        <masterLabel>Case Summary Agent</masterLabel>
+        <plannerType>AiCopilot__ReAct</plannerType>
+    </planner>
+    <smallTalkEnabled>false</smallTalkEnabled>
+    <staticPromptsEnabled>false</staticPromptsEnabled>
+    <status>Inactive</status>
+    <stopRecPrompts>false</stopRecPrompts>
+    <surfacesEnabled>false</surfacesEnabled>
+    <toneType>Casual</toneType>
+    <version>1</version>
+    <welcomeMessage>Hi! I&apos;m the Case Summary Agent. Share a Case Id (or open a Case) and I&apos;ll summarize it for you.</welcomeMessage>
+</AiAgentDefinitionVersion>
