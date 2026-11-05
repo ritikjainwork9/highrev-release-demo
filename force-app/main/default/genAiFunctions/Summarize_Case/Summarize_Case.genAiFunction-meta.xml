@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Generates a plain-language summary of a single Case record: 3-5 bullet summary, current status, and a suggested next step. Requires the Case record Id.</description>
+    <developerName>Summarize_Case</developerName>
+    <invocationTarget>Summarize_Case</invocationTarget>
+    <invocationTargetType>generatePromptResponse</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+    <localDeveloperName>Summarize_Case</localDeveloperName>
+    <masterLabel>Summarize Case</masterLabel>
+    <progressIndicatorMessage>Summarizing the case...</progressIndicatorMessage>
+</GenAiFunction>

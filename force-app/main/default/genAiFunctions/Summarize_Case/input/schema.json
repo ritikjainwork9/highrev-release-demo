@@ -1,0 +1,17 @@
+{
+  "required" : [ "Input:Case" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "Input:Case" : {
+      "title" : "Case",
+      "description" : "The Case record to summarize. Provide the Case record Id (starts with 500), using the current record Id when the user is on a Case page.",
+      "lightning:type" : "lightning__recordInfoType",
+      "lightning:sObjectInfo" : {
+        "apiName" : "Case"
+      },
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : true
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}
