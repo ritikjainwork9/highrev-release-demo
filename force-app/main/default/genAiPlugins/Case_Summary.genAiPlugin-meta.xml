@@ -22,7 +22,7 @@
     <description>Summarizes, explains or catches a service rep up on a single Case by calling the Summarize Case prompt template action and returning a short plain-language summary.</description>
     <developerName>Case_Summary</developerName>
     <genAiFunctions>
-        <functionName>Summarize_Case</functionName>
+        <functionName>Case_Summary_Generate</functionName>
     </genAiFunctions>
     <genAiPluginInstructions>
         <description>To summarize, explain or catch up on a case, always call the Summarize Case action with the Case record. Do not summarize from memory or invent case details.</description>

@@ -2,8 +2,8 @@
 <GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
     <activeVersionIdentifier>SummarizeCase_1</activeVersionIdentifier>
     <description>Summarizes a Case for service reps: 3-5 bullet summary, current status, and a suggested next step, grounded on key Case, Account and Contact fields.</description>
-    <developerName>Summarize_Case</developerName>
-    <masterLabel>Summarize Case</masterLabel>
+    <developerName>Case_Summary_Prompt</developerName>
+    <masterLabel>Case Summary Prompt</masterLabel>
     <overridable>false</overridable>
     <templateVersions>
         <content>You are a Salesforce service assistant helping a service rep quickly catch up on a customer case. Use ONLY the case data below. Do not invent facts, dates, names or commitments.
