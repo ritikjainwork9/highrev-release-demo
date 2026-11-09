@@ -182,4 +182,89 @@ private class CaseSummaryControllerTest {
         Assert.isTrue(joined.endsWith('(A; B)'), 'Errors should be joined: ' + joined);
         Assert.areEqual(CaseSummaryController.GENERIC_ERROR, empty, 'Empty list should yield generic error');
     }
+
+    /** Maps an agentResponse string through toAgentResult as a successful action output. */
+    private static String mapResponse(String agentResponse) {
+        return CaseSummaryController.toAgentResult(
+            true, new Map<String, Object>{ 'agentResponse' => agentResponse }, null).response;
+    }
+
+    @isTest
+    static void testToAgentResultExtractsJsonValue() {
+        Test.startTest();
+        String text = mapResponse('{"type":"Text","value":"Summary line one\\nSummary line two"}');
+        Test.stopTest();
+
+        Assert.areEqual('Summary line one\nSummary line two', text, 'Only the JSON value text should be returned');
+    }
+
+    @isTest
+    static void testToAgentResultKeepsPlainText() {
+        String plain = 'Customer reports a printer fault. {not json}';
+
+        Test.startTest();
+        String text = mapResponse(plain);
+        String malformed = mapResponse('{"type":"Text","value":');
+        Test.stopTest();
+
+        Assert.areEqual(plain, text, 'Plain text response should be returned unchanged');
+        Assert.areEqual('{"type":"Text","value":', malformed, 'Malformed JSON should be returned unchanged');
+    }
+
+    @isTest
+    static void testToAgentResultKeepsJsonWithoutValue() {
+        String noValue = '{"type":"Text","message":"Summary"}';
+        String jsonArray = '[{"value":"Summary"}]';
+
+        Test.startTest();
+        String text = mapResponse(noValue);
+        String arrayText = mapResponse(jsonArray);
+        Test.stopTest();
+
+        Assert.areEqual(noValue, text, 'JSON without a value should be returned unchanged');
+        Assert.areEqual(jsonArray, arrayText, 'A JSON array is not an envelope and should be returned unchanged');
+    }
+
+    @isTest
+    static void testToAgentResultKeepsNonTextValue() {
+        String numberValue = '{"type":"Number","value":42}';
+        String objectValue = '{"type":"Object","value":{"text":"Summary"}}';
+        String nullValue = '{"type":"Text","value":null}';
+
+        Test.startTest();
+        String numberText = mapResponse(numberValue);
+        String objectText = mapResponse(objectValue);
+        String nullText = mapResponse(nullValue);
+        Test.stopTest();
+
+        Assert.areEqual(numberValue, numberText, 'Numeric value should leave the response unchanged');
+        Assert.areEqual(objectValue, objectText, 'Object value should leave the response unchanged');
+        Assert.areEqual(nullValue, nullText, 'Null value should leave the response unchanged');
+    }
+
+    @isTest
+    static void testJsonResponseReturnsValueFromGetSummary() {
+        CaseSummaryController.invoker = new MockInvoker(new CaseSummaryController.AgentResult(
+            true, mapResponse('{"type":"Text","value":"Printer fault reported by phone."}'), null));
+
+        Test.startTest();
+        String summary = CaseSummaryController.getSummary(getCaseId());
+        Test.stopTest();
+
+        Assert.areEqual('Printer fault reported by phone.', summary, 'getSummary should return only the value text');
+    }
+
+    @isTest
+    static void testBlankJsonValueThrowsEmptySummary() {
+        String blankValue = mapResponse('{"type":"Text","value":"  "}');
+        CaseSummaryController.invoker = new MockInvoker(
+            new CaseSummaryController.AgentResult(true, blankValue, null));
+
+        Test.startTest();
+        String message = callExpectingError(getCaseId());
+        Test.stopTest();
+
+        Assert.areEqual('  ', blankValue, 'Blank value text should be extracted as-is');
+        Assert.isTrue(message.contains('empty summary'), 'Empty summary error expected: ' + message);
+    }
 }
