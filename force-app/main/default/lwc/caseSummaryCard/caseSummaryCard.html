@@ -1,0 +1,30 @@
+<template>
+    <lightning-card title="AI Case Summary" icon-name="standard:case">
+        <lightning-button
+            slot="actions"
+            label="Summarize with Agentforce"
+            icon-name="utility:einstein"
+            variant="brand"
+            disabled={isLoading}
+            onclick={handleSummarize}>
+        </lightning-button>
+
+        <div class="slds-p-horizontal_medium slds-is-relative summary-body">
+            <template lwc:if={isLoading}>
+                <lightning-spinner alternative-text="Generating summary" size="small"></lightning-spinner>
+            </template>
+            <template lwc:elseif={errorMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <lightning-icon icon-name="utility:error" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                    <span>{errorMessage}</span>
+                </div>
+            </template>
+            <template lwc:elseif={summary}>
+                <p class="slds-text-body_regular summary-text">{summary}</p>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-color_weak">Click "Summarize with Agentforce" to generate a summary of this case.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

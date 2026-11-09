@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlugin xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <aiPluginUtterances>
+        <developerName>Summarize_This_Case</developerName>
+        <language>en_US</language>
+        <masterLabel>Summarize this case</masterLabel>
+        <utterance>Summarize this case for me.</utterance>
+    </aiPluginUtterances>
+    <aiPluginUtterances>
+        <developerName>Explain_Case</developerName>
+        <language>en_US</language>
+        <masterLabel>Explain a case</masterLabel>
+        <utterance>Can you explain what case 500XXXXXXXXXXXX is about?</utterance>
+    </aiPluginUtterances>
+    <aiPluginUtterances>
+        <developerName>Catch_Up_On_Case</developerName>
+        <language>en_US</language>
+        <masterLabel>Catch up on a case</masterLabel>
+        <utterance>Catch me up on this case.</utterance>
+    </aiPluginUtterances>
+    <canEscalate>false</canEscalate>
+    <description>Summarizes, explains or catches a service rep up on a single Case by calling the Summarize Case prompt template action and returning a short plain-language summary.</description>
+    <developerName>Case_Summary</developerName>
+    <genAiFunctions>
+        <functionName>Case_Summary_Generate</functionName>
+    </genAiFunctions>
+    <genAiPluginInstructions>
+        <description>To summarize, explain or catch up on a case, always call the Summarize Case action with the Case record. Do not summarize from memory or invent case details.</description>
+        <developerName>callSummarizeCase2</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>callSummarizeCase2</masterLabel>
+        <sortOrder>0</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>If the case cannot be found or the user has no access to it, say so briefly and ask for a different Case record Id.</description>
+        <developerName>caseNotFound4</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>caseNotFound4</masterLabel>
+        <sortOrder>0</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Return the action&apos;s short summary in plain language exactly as structured: 3-5 bullets, current status and a suggested next step. Do not add raw field names, JSON or extra commentary.</description>
+        <developerName>plainLanguageSummary3</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>plainLanguageSummary3</masterLabel>
+        <sortOrder>0</sortOrder>
+    </genAiPluginInstructions>
+    <genAiPluginInstructions>
+        <description>Always use a Case record Id. If the user is on a Case record page (currentObjectApiName is Case), use currentRecordId as the Case. Otherwise, or if the Id is not a Case, ask the user for the Case record Id before continuing.</description>
+        <developerName>useCaseRecordId1</developerName>
+        <language xsi:nil="true"/>
+        <masterLabel>useCaseRecordId1</masterLabel>
+        <sortOrder>0</sortOrder>
+    </genAiPluginInstructions>
+    <language>en_US</language>
+    <localDeveloperName>Case_Summary</localDeveloperName>
+    <masterLabel>Case Summary</masterLabel>
+    <pluginType>Topic</pluginType>
+    <scope>Your job is to summarize, explain or catch the user up on one existing Case using its record Id. You do NOT create, update, close or escalate cases, draft customer emails, or answer questions unrelated to a specific Case.</scope>
+</GenAiPlugin>

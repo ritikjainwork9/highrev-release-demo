@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>SummarizeCase_1</activeVersionIdentifier>
+    <description>Summarizes a Case for service reps: 3-5 bullet summary, current status, and a suggested next step, grounded on key Case, Account and Contact fields.</description>
+    <developerName>Case_Summary_Prompt</developerName>
+    <masterLabel>Case Summary Prompt</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>You are a Salesforce service assistant helping a service rep quickly catch up on a customer case. Use ONLY the case data below. Do not invent facts, dates, names or commitments.
+
+Case data:
+- Subject: {!$Input:Case.Subject}
+- Description: {!$Input:Case.Description}
+- Status: {!$Input:Case.Status}
+- Priority: {!$Input:Case.Priority}
+- Origin: {!$Input:Case.Origin}
+- Created Date: {!$Input:Case.CreatedDate}
+- Account Name: {!$Input:Case.Account.Name}
+- Contact Name: {!$Input:Case.Contact.Name}
+
+Follow these numbered instructions:
+1. Write a section titled &quot;Summary&quot; with 3 to 5 short bullet points in plain, non-technical language that explain what the case is about, who it is for (account and contact), how it came in, how long it has been open, and how urgent it is.
+2. Write a section titled &quot;Current Status&quot; with one sentence stating the case status and priority.
+3. Write a section titled &quot;Suggested Next Step&quot; with one concrete, actionable next step for the service rep based on the status, priority and description.
+4. If a field is blank, skip it or say it is not provided. Never guess its value.
+5. Keep the full response under 150 words. Do not add a preamble or closing remarks, and do not show field API names.</content>
+        <inputs>
+            <apiName>Case</apiName>
+            <definition>SOBJECT://Case</definition>
+            <masterLabel>Case</masterLabel>
+            <referenceName>Input:Case</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <status>Published</status>
+        <versionIdentifier>SummarizeCase_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
