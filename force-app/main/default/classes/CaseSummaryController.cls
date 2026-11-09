@@ -58,7 +58,34 @@ public with sharing class CaseSummaryController {
             }
         }
         Object output = (isSuccess == true && outputs != null) ? outputs.get('agentResponse') : null;
-        return new AgentResult(isSuccess == true, output == null ? null : String.valueOf(output), errors);
+        return new AgentResult(isSuccess == true, output == null ? null : extractResponseText(String.valueOf(output)), errors);
+    }
+
+    /**
+     * The agent returns agentResponse as a JSON envelope such as
+     * {"type":"Text","value":"Summary ..."}. Returns only the "value" text when
+     * the response is a JSON object whose "value" is a string; otherwise
+     * (plain text, malformed JSON, no value, or a non-text value) returns the
+     * response unchanged.
+     */
+    @TestVisible
+    private static String extractResponseText(String response) {
+        if (String.isBlank(response) || !response.trim().startsWith('{')) {
+            return response;
+        }
+        try {
+            Object parsed = JSON.deserializeUntyped(response);
+            if (parsed instanceof Map<String, Object>) {
+                Object value = ((Map<String, Object>) parsed).get('value');
+                if (value instanceof String) {
+                    return (String) value;
+                }
+            }
+        } catch (JSONException e) {
+            // Not valid JSON: the agent replied in plain text, so show it as-is.
+            return response;
+        }
+        return response;
     }
 
     @TestVisible
